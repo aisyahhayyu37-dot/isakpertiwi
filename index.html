@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaPass - Dual-Phase Tracking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0b0f1a; color: #f8fafc; }
+        .glass-card { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .gradient-blue { background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); }
+        input, select, textarea { background: rgba(15, 23, 42, 0.9) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; color: white !important; }
+        #qrcode img { margin: 0 auto; border: 8px solid white; border-radius: 8px; }
+        .star-rating { display: flex; flex-direction: row-reverse; justify-content: center; gap: 8px; }
+        .star-rating input { display: none; }
+        .star-rating label { cursor: pointer; font-size: 40px; color: #334155; transition: color 0.2s; }
+        .star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label { color: #fbbf24; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+
+    <div id="app" class="w-full max-w-md">
+        
+        <!-- PHASE 1: RESERVATION (Log Start) -->
+        <div id="view-reservation" class="glass-card p-8 rounded-[2rem] shadow-2xl">
+            <div class="text-center mb-8">
+                <div class="inline-block p-3 bg-blue-500/10 rounded-2xl mb-4">
+                    <i data-lucide="film" class="text-blue-400" size="32"></i>
+                </div>
+                <h1 class="text-3xl font-bold tracking-tight">ISAK PERTIWI - PREMIERE  SHOW</h1>
+                <p class="text-slate-400 text-sm mt-1">Check-in and reserve your seat. Please don't close the page until the show is over.</p>
+            </div>
+            
+            <form id="ticketForm" class="space-y-6">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2 ml-1">Student Name</label>
+                    <input type="text" id="res-name" required class="w-full px-4 py-4 rounded-2xl focus:ring-2 focus:ring-blue-500 transition-all" placeholder="Enter full name">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2 ml-1">Class</label>
+                    <select id="res-class" class="w-full px-4 py-4 rounded-2xl appearance-none cursor-pointer">
+                        <option value="" disabled selected>Select your class</option>
+                        <optgroup label="Grade X">
+                            <option>XA</option><option>XB</option><option>XC</option><option>XD</option><option>XE</option><option>XF</option><option>XG</option>
+                        </optgroup>
+                        <optgroup label="Grade XI">
+                            <option>XIA</option><option>XIB</option><option>XIC</option><option>XID</option><option>XIE</option><option>XIF</option><option>XIG</option>
+                        </optgroup>
+                        <optgroup label="Grade XII">
+                            <option>XIIA</option><option>XIIB</option><option>XIIC</option><option>XIID</option><option>XIIE</option><option>XIIF</option><option>XIIG</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <button type="submit" id="reserveBtn" class="w-full gradient-blue py-4 rounded-2xl font-bold text-white shadow-xl shadow-blue-500/20 hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                    Check-In Now <i data-lucide="arrow-right" size="18"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- PHASE 2: TICKET & FEEDBACK LINK -->
+        <div id="view-ticket" class="hidden glass-card p-8 rounded-[2rem] text-center border-t-4 border-blue-500">
+            <h2 class="text-sm font-bold uppercase tracking-[0.2em] text-blue-400 mb-6">Reservation Confirmed</h2>
+            
+            <div id="qrcode-container" class="bg-white p-4 rounded-2xl inline-block mb-6 shadow-2xl">
+                <div id="qrcode"></div>
+            </div>
+
+            <div class="space-y-1 mb-8">
+                <p id="ticket-display-name" class="text-2xl font-bold"></p>
+                <p id="ticket-display-class" class="text-slate-400 font-medium"></p>
+            </div>
+
+            <div class="bg-slate-800/40 p-5 rounded-2xl border border-white/5 mb-8">
+                <p class="text-xs text-slate-400 leading-relaxed italic">Your check-in has been logged. To receive your 5-digit Prize Code, please provide your feedback below.</p>
+            </div>
+
+            <button onclick="showView('view-feedback')" class="w-full bg-white text-slate-900 py-4 rounded-2xl font-bold hover:bg-slate-100 transition-all flex items-center justify-center gap-2">
+                Give Feedback <i data-lucide="message-square" size="18"></i>
+            </button>
+        </div>
+
+        <!-- PHASE 3: FEEDBACK FORM -->
+        <div id="view-feedback" class="hidden glass-card p-8 rounded-[2rem]">
+            <h2 class="text-2xl font-bold mb-6 text-center">Feedback Form</h2>
+            <form id="feedbackForm" class="space-y-6">
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" required/><label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4"/><label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3"/><label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2"/><label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1"/><label for="star1">★</label>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2 ml-1">Comments</label>
+                    <textarea id="fb-comment" placeholder="What did you think of the event?" class="w-full px-4 py-4 rounded-2xl h-32 focus:ring-2 focus:ring-blue-500" required></textarea>
+                </div>
+
+                <button type="submit" id="submitFbBtn" class="w-full gradient-blue py-4 rounded-2xl font-bold flex items-center justify-center gap-2">
+                    Submit Feedback <i data-lucide="check-circle" size="18"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- PHASE 4: SUCCESS & PRIZE CODE REVEAL -->
+        <div id="view-success" class="hidden glass-card p-10 rounded-[2rem] text-center">
+            <div class="mb-6 flex justify-center">
+                <div class="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center">
+                    <i data-lucide="gift" size="40"></i>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Thank You!</h2>
+            <p class="text-slate-400 text-sm mb-8">Submission complete. Here is your unique code:</p>
+            
+            <div class="bg-slate-900 border-2 border-dashed border-blue-500/30 p-6 rounded-2xl mb-8">
+                <p id="final-prize-code" class="text-5xl font-mono font-black text-blue-400 tracking-widest"></p>
+                <p class="text-[10px] uppercase tracking-widest text-slate-600 mt-4">Verified Reward ID</p>
+            </div>
+
+            <button onclick="resetApp()" class="text-slate-500 hover:text-white transition-colors text-sm font-medium underline underline-offset-4">
+                Done, New Entry
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. CONFIGURATION ---
+        // Your Google Apps Script Web App URL
+        const GOOGLE_SCRIPT_URL = ""; 
+
+        let state = {
+            name: '',
+            class: '',
+            prizeCode: ''
+        };
+
+        window.onload = () => lucide.createIcons();
+
+        function showView(id) {
+            ['view-reservation', 'view-ticket', 'view-feedback', 'view-success'].forEach(v => {
+                document.getElementById(v).classList.add('hidden');
+            });
+            document.getElementById(id).classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        // --- 2. STEP 1: LOG RESERVATION ---
+        document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('reserveBtn');
+            const originalText = btn.innerHTML;
+            
+            state.name = document.getElementById('res-name').value;
+            state.class = document.getElementById('res-class').value;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="animate-spin" data-lucide="loader-2"></i> Logging...';
+            lucide.createIcons();
+
+            // First Log: Just Name and Class to track who reserved
+            const initialLog = {
+                action: 'RESERVE',
+                timestamp: new Date().toLocaleString(),
+                name: state.name,
+                class: state.class,
+                status: 'Reserved (Pending Feedback)'
+            };
+
+            if (GOOGLE_SCRIPT_URL) {
+                try {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify(initialLog)
+                    });
+                } catch (err) { console.error("Initial log failed", err); }
+            }
+
+            // Generate QR
+            document.getElementById("qrcode").innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), {
+                text: `PASS:${state.name}:${state.class}`,
+                width: 200, height: 200, colorDark: "#0b0f1a"
+            });
+
+            document.getElementById('ticket-display-name').innerText = state.name;
+            document.getElementById('ticket-display-class').innerText = "Class " + state.class;
+            
+            showView('view-ticket');
+        });
+
+        // --- 3. STEP 2: LOG FEEDBACK & GENERATE PRIZE CODE ---
+        document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitFbBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="animate-spin" data-lucide="loader-2"></i> Saving...';
+            lucide.createIcons();
+
+            // Prize code generated ONLY on submission
+            state.prizeCode = Math.floor(10000 + Math.random() * 90000);
+            
+            const rating = document.querySelector('input[name="rating"]:checked').value;
+            const comment = document.getElementById('fb-comment').value;
+
+            const feedbackLog = {
+                action: 'FEEDBACK',
+                name: state.name,
+                class: state.class,
+                rating: rating + " Stars",
+                feedback: comment,
+                prizeCode: state.prizeCode,
+                status: 'Completed'
+            };
+
+            if (GOOGLE_SCRIPT_URL) {
+                try {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify(feedbackLog)
+                    });
+                } catch (err) { console.error("Feedback log failed", err); }
+            }
+
+            document.getElementById('final-prize-code').innerText = state.prizeCode;
+            showView('view-success');
+        });
+
+        function resetApp() {
+            document.getElementById('ticketForm').reset();
+            document.getElementById('feedbackForm').reset();
+            showView('view-reservation');
+        }
+    </script>
+</body>
+</html>
