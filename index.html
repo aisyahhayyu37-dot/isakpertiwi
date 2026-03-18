@@ -13,10 +13,7 @@
             --bg-black: #000000;
             --pure-white: #ffffff;
             --text-high: #ffffff;
-            --text-med: #e5e7eb;
-            --text-label: #9ca3af;
-            --glass-white: rgba(255, 255, 255, 0.05);
-            --input-bg: rgba(0, 0, 0, 0.9);
+            --input-bg: rgba(0, 0, 0, 0.95);
         }
 
         body { 
@@ -28,7 +25,6 @@
             overflow-x: hidden;
         }
 
-        /* Mesh Background Effect */
         .mesh-bg {
             position: fixed;
             top: 0;
@@ -38,26 +34,25 @@
             z-index: -1;
             background-color: #000000;
             background-image: 
-                radial-gradient(at 0% 0%, hsla(0,0%,20%,1) 0, transparent 50%), 
-                radial-gradient(at 50% 0%, hsla(0,0%,15%,1) 0, transparent 50%), 
+                radial-gradient(at 0% 0%, hsla(0,0%,25%,1) 0, transparent 50%), 
                 radial-gradient(at 100% 0%, hsla(0,0%,20%,1) 0, transparent 50%), 
-                radial-gradient(at 50% 100%, hsla(0,0%,10%,1) 0, transparent 50%),
-                radial-gradient(at 0% 100%, hsla(0,0%,15%,1) 0, transparent 50%);
+                radial-gradient(at 50% 100%, hsla(0,0%,15%,1) 0, transparent 50%);
         }
 
         .glass-panel {
-            background: rgba(15, 15, 15, 0.85);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            background: rgba(12, 12, 12, 0.95);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 60px rgba(0,0,0,1);
         }
 
         .input-field {
             background: var(--input-bg) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            color: white !important;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            color: #ffffff !important;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s ease;
         }
 
         .input-field::placeholder {
@@ -65,103 +60,111 @@
         }
 
         .input-field:focus {
-            border-color: white !important;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
-            background: #000 !important;
+            border-color: #ffffff !important;
+            background: #000000 !important;
         }
 
         .btn-monochrome {
-            background: var(--pure-white);
-            color: var(--bg-black);
+            background: #ffffff;
+            color: #000000;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 800;
-            text-shadow: none;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
         }
 
         .btn-monochrome:hover {
             transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-            filter: brightness(1.1);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
         }
 
-        .header-title {
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        .label-pop {
+            color: #ffffff;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            font-size: 11px;
+            text-shadow: 0 2px 4px rgba(0,0,0,1);
         }
 
-        .star-rating {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: center;
-            gap: 12px;
+        .header-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
         }
-        .star-rating input { display: none; }
+
+        /* Fixed Image Handling: No cropping, full aspect ratio */
+        .poster-container {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 1.5rem 1.5rem 0 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            background: #000;
+        }
+
+        .poster-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .form-content {
+            padding: 2rem 1.5rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade { animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
         .star-rating label {
             cursor: pointer;
-            font-size: 36px;
-            color: #444;
+            font-size: 40px;
+            color: #333;
             transition: all 0.2s;
         }
         .star-rating label:hover,
         .star-rating label:hover ~ label,
         .star-rating input:checked ~ label {
-            color: white;
+            color: #ffffff;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
         }
-
-        .poster-container {
-            width: 100%;
-            max-height: 420px;
-            overflow: hidden;
-            border-radius: 1.5rem 1.5rem 0 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .form-content {
-            padding: 2.5rem 2rem;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-fade { animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .star-rating input { display: none; }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center p-4">
+<body class="flex flex-col items-center justify-center p-4 min-h-screen">
 
     <div class="mesh-bg"></div>
 
-    <div id="app" class="max-w-md w-full mx-auto py-12">
+    <div id="app" class="max-w-md w-full mx-auto py-8">
         
         <!-- STAGE 1: ENTRANCE REGISTRATION -->
         <div id="view-registration" class="animate-fade">
-            <div class="text-center mb-10">
-                <p class="text-[10px] uppercase tracking-[0.6em] text-white font-extrabold mb-3">Buana Production</p>
-                <h1 class="text-5xl font-black tracking-tighter text-white uppercase italic header-title">Isak Pertiwi</h1>
-                <p class="text-gray-300 text-[11px] mt-2 tracking-widest font-bold">XII A GROUP 1 • PREMIERE GATE</p>
+            <div class="text-center mb-8">
+                <p class="text-[10px] uppercase tracking-[0.6em] text-white font-black mb-2 shadow-black text-shadow-sm">Buana Production</p>
+                <h1 class="text-5xl font-black tracking-tighter text-white uppercase italic header-glow">Isak Pertiwi</h1>
+                <p class="text-white text-[11px] mt-2 tracking-widest font-bold bg-white/20 inline-block px-4 py-1.5 rounded-full border border-white/10">XII A GROUP 1 • PREMIERE GATE</p>
             </div>
 
-            <div class="glass-panel rounded-[2rem] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden">
-                <!-- Poster inside the box -->
+            <div class="glass-panel rounded-[2rem] shadow-2xl overflow-hidden">
                 <div class="poster-container">
+                    <!-- Direct link to ensure original quality and aspect ratio -->
                     <img src="https://i.ibb.co.com/5H6b06N/1000292581.png" 
-                         alt="Isak Pertiwi" 
-                         class="w-full h-full object-cover grayscale brightness-110 hover:grayscale-0 transition-all duration-700">
+                         alt="Isak Pertiwi Poster" 
+                         class="poster-img">
                 </div>
 
                 <div class="form-content">
-                    <form id="regForm" class="space-y-5">
-                        <div class="space-y-1.5">
-                            <label class="text-[11px] uppercase tracking-[0.2em] text-white font-extrabold ml-1">Full Name</label>
-                            <input type="text" id="name" required class="input-field w-full px-5 py-4 rounded-xl outline-none" placeholder="Enter Full Name">
+                    <form id="regForm" class="space-y-6">
+                        <div class="space-y-2">
+                            <label class="label-pop block ml-1">Full Name</label>
+                            <input type="text" id="name" required class="input-field w-full px-5 py-4 rounded-2xl outline-none" placeholder="Enter Full Name">
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="space-y-1.5">
-                                <label class="text-[11px] uppercase tracking-[0.2em] text-white font-extrabold ml-1">Class</label>
-                                <select id="class" required class="input-field w-full px-5 py-4 rounded-xl outline-none appearance-none">
+                            <div class="space-y-2">
+                                <label class="label-pop block ml-1">Class</label>
+                                <select id="class" required class="input-field w-full px-5 py-4 rounded-2xl outline-none appearance-none">
                                     <option value="" disabled selected>-</option>
                                     <optgroup label="Grade X">
                                         <option>XA</option><option>XB</option><option>XC</option><option>XD</option><option>XE</option><option>XF</option><option>XG</option>
@@ -174,18 +177,18 @@
                                     </optgroup>
                                 </select>
                             </div>
-                            <div class="space-y-1.5">
-                                <label class="text-[11px] uppercase tracking-[0.2em] text-white font-extrabold ml-1">WhatsApp</label>
-                                <input type="tel" id="whatsapp" required class="input-field w-full px-5 py-4 rounded-xl outline-none" placeholder="08...">
+                            <div class="space-y-2">
+                                <label class="label-pop block ml-1">WhatsApp</label>
+                                <input type="tel" id="whatsapp" required class="input-field w-full px-5 py-4 rounded-2xl outline-none" placeholder="08...">
                             </div>
                         </div>
 
-                        <div class="space-y-1.5">
-                            <label class="text-[11px] uppercase tracking-[0.2em] text-white font-extrabold ml-1">Email</label>
-                            <input type="email" id="email" required class="input-field w-full px-5 py-4 rounded-xl outline-none" placeholder="your@email.com">
+                        <div class="space-y-2">
+                            <label class="label-pop block ml-1">Email Address</label>
+                            <input type="email" id="email" required class="input-field w-full px-5 py-4 rounded-2xl outline-none" placeholder="your@email.com">
                         </div>
 
-                        <button type="submit" id="btn-reg" class="btn-monochrome w-full py-5 rounded-xl text-xs mt-4 tracking-[0.4em] uppercase">
+                        <button type="submit" id="btn-reg" class="btn-monochrome w-full py-5 rounded-2xl text-sm mt-4 font-black">
                             Verify Entry
                         </button>
                     </form>
@@ -195,14 +198,14 @@
 
         <!-- STAGE 2: FEEDBACK FORM -->
         <div id="view-feedback" class="hidden animate-fade">
-            <div class="glass-panel p-10 rounded-[2.5rem] shadow-2xl">
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl font-black text-white uppercase tracking-tighter italic header-title">Film Review</h2>
-                    <div class="h-1 w-12 bg-white mx-auto mt-2"></div>
+            <div class="glass-panel p-8 rounded-[2.5rem] shadow-2xl">
+                <div class="text-center mb-8">
+                    <h2 class="text-4xl font-black text-white uppercase italic header-glow">Review</h2>
+                    <div class="h-1.5 w-16 bg-white mx-auto mt-2 rounded-full"></div>
                 </div>
 
                 <form id="feedbackForm" class="space-y-6">
-                    <div class="star-rating mb-4">
+                    <div class="star-rating mb-6">
                         <input type="radio" id="s5" name="rating" value="5" required/><label for="s5">★</label>
                         <input type="radio" id="s4" name="rating" value="4"/><label for="s4">★</label>
                         <input type="radio" id="s3" name="rating" value="3"/><label for="s3">★</label>
@@ -210,47 +213,46 @@
                         <input type="radio" id="s1" name="rating" value="1"/><label for="s1">★</label>
                     </div>
 
-                    <div class="space-y-1.5">
-                        <label class="text-[11px] uppercase tracking-widest text-white font-extrabold ml-1">Strength</label>
-                        <textarea id="strength" required class="input-field w-full px-5 py-4 rounded-xl h-24 outline-none resize-none text-sm" placeholder="What was effective?"></textarea>
+                    <div class="space-y-2">
+                        <label class="label-pop block ml-1">Strength</label>
+                        <textarea id="strength" required class="input-field w-full px-5 py-4 rounded-2xl h-28 outline-none resize-none" placeholder="What worked well?"></textarea>
                     </div>
 
-                    <div class="space-y-1.5">
-                        <label class="text-[11px] uppercase tracking-widest text-white font-extrabold ml-1">Weakness</label>
-                        <textarea id="weakness" required class="input-field w-full px-5 py-4 rounded-xl h-24 outline-none resize-none text-sm" placeholder="Areas for growth?"></textarea>
+                    <div class="space-y-2">
+                        <label class="label-pop block ml-1">Weakness</label>
+                        <textarea id="weakness" required class="input-field w-full px-5 py-4 rounded-2xl h-28 outline-none resize-none" placeholder="Areas for improvement?"></textarea>
                     </div>
 
-                    <div class="space-y-1.5">
-                        <label class="text-[11px] uppercase tracking-widest text-white font-extrabold ml-1">Advice</label>
-                        <textarea id="opinion" required class="input-field w-full px-5 py-4 rounded-xl h-24 outline-none resize-none text-sm" placeholder="Your notes to the production team..."></textarea>
+                    <div class="space-y-2">
+                        <label class="label-pop block ml-1">Advice / Opinion</label>
+                        <textarea id="opinion" required class="input-field w-full px-5 py-4 rounded-2xl h-28 outline-none resize-none" placeholder="Message to the crew..."></textarea>
                     </div>
 
-                    <button type="submit" id="btn-submit" class="btn-monochrome w-full py-5 rounded-xl text-xs tracking-[0.4em] uppercase">
-                        Confirm Submission
+                    <button type="submit" id="btn-submit" class="btn-monochrome w-full py-5 rounded-2xl text-sm font-black">
+                        Submit Review
                     </button>
                 </form>
             </div>
         </div>
 
         <!-- STAGE 3: SUCCESS -->
-        <div id="view-success" class="hidden text-center space-y-10 py-20 animate-fade">
-            <div class="w-24 h-24 border-2 border-white rounded-full flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-                <i data-lucide="check" class="text-white" size="40"></i>
+        <div id="view-success" class="hidden text-center space-y-12 py-20 animate-fade">
+            <div class="w-32 h-32 border-4 border-white rounded-full flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(255,255,255,0.4)]">
+                <i data-lucide="check" class="text-white" size="64" stroke-width="3"></i>
             </div>
-            <div class="space-y-3">
-                <h2 class="text-5xl font-black text-white tracking-tighter uppercase italic header-title">Success</h2>
-                <p class="text-white text-[13px] font-bold tracking-widest leading-loose">BUANA PRODUCTION THANKS YOU FOR YOUR VALUABLE FEEDBACK.</p>
+            <div class="space-y-4">
+                <h2 class="text-5xl font-black text-white uppercase italic header-glow">Success</h2>
+                <p class="text-white text-base font-bold tracking-[0.2em] leading-relaxed max-w-xs mx-auto">BUANA PRODUCTION THANKS YOU FOR YOUR FEEDBACK.</p>
             </div>
-            <button onclick="location.reload()" class="text-[11px] text-white/60 uppercase tracking-[0.5em] font-extrabold hover:text-white transition-colors pt-10">
-                Exit Portal
+            <button onclick="location.reload()" class="text-xs text-white/70 uppercase tracking-[0.5em] font-black border-b-2 border-white/20 hover:text-white hover:border-white transition-all pt-2 pb-1">
+                Exit Gate
             </button>
         </div>
 
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = ""; // YOUR APPS SCRIPT URL HERE
-        
+        const GOOGLE_SCRIPT_URL = ""; 
         let sessionData = {};
 
         window.onload = () => { lucide.createIcons(); };
@@ -277,7 +279,7 @@
             };
 
             btn.disabled = true;
-            btn.innerText = "VERIFYING...";
+            btn.innerText = "VERIFYING ENTRY...";
 
             if (GOOGLE_SCRIPT_URL) {
                 try {
@@ -286,7 +288,7 @@
                         mode: 'no-cors',
                         body: JSON.stringify(sessionData)
                     });
-                } catch (err) { console.error("Sync Error", err); }
+                } catch (err) { console.error(err); }
             }
 
             showView('view-feedback');
@@ -306,7 +308,7 @@
             };
 
             btn.disabled = true;
-            btn.innerText = "SUBMITTING...";
+            btn.innerText = "SUBMITTING REVIEW...";
 
             if (GOOGLE_SCRIPT_URL) {
                 try {
@@ -315,7 +317,7 @@
                         mode: 'no-cors',
                         body: JSON.stringify(payload)
                     });
-                } catch (err) { console.error("Sync Error", err); }
+                } catch (err) { console.error(err); }
             }
 
             showView('view-success');
