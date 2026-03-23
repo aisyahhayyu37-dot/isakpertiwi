@@ -246,7 +246,7 @@
 
     <script>
         // 1. PLACE YOUR WEB APP URL HERE
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyV4QngNViYRQmht90MN6VlAonCeRFu4eDHzTgFBhhFOipByrx4dE2R6Ae5Ty2pHNGF/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwItB1jOee21mpGm0rONpeABF3Y1Z4J39GFHdrlUa1bKrDcq_B3lgE3detYIqTd-a_L/exec"; 
         
         let sessionData = {};
         let currentRating = 0;
@@ -284,7 +284,7 @@
 
         // POST Data helper using URLSearchParams for better Google Script compatibility
         async function sendToGoogle(data) {
-            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("YOUR_SCRIPT_URL")) return;
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbwItB1jOee21mpGm0rONpeABF3Y1Z4J39GFHdrlUa1bKrDcq_B3lgE3detYIqTd-a_L/exec")) return;
             
             try {
                 // We use form-data style for widest compatibility with default GAS setups
